@@ -86,6 +86,27 @@
   @media (max-width: 600px) {
     .grid-2, .grid-3, .grid-5, .two-col { grid-template-columns: 1fr; }
   }
+
+  /* TPI LINK BUTTON */
+  .nav-link-tpi {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    padding: 10px 14px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 500;
+    border-bottom: 3px solid transparent;
+    transition: all 0.15s;
+    white-space: nowrap;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin-left: auto;
+  }
+  .nav-link-tpi:hover { color: #f97316; }
+  .nav-link-tpi .dot { width: 7px; height: 7px; border-radius: 50%; background: #f97316; flex-shrink: 0; }
 </style>
 </head>
 <body>
@@ -102,6 +123,7 @@
   <button onclick="showTab('u3a',this)" style="--accent:#d97706">U3a · Factores Situacionales</button>
   <button onclick="showTab('u3b',this)" style="--accent:#dc2626">U3b · Tipologías</button>
   <button onclick="showTab('u3c',this)" style="--accent:#7c3aed">U3c · Formas y Fuerzas</button>
+  <a href="devoluciones_tpi.html" target="_blank" class="nav-link-tpi"><span class="dot"></span>TPI · Devoluciones</a>
 </nav>
 
 <main>

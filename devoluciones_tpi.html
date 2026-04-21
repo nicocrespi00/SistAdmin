@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Devoluciones – Primera Parte TPI – TalentNode SRL</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', Arial, sans-serif;
+      font-size: 13px;
+      line-height: 1.65;
+      color: #1a1a1a;
+      background: #fff;
+      padding: 48px 56px;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    /* ── Header ── */
+    .header {
+      border-bottom: 3px solid #1e3a5f;
+      padding-bottom: 18px;
+      margin-bottom: 32px;
+    }
+    .header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: #1e3a5f;
+      margin-bottom: 4px;
+    }
+    .header .meta {
+      font-size: 12px;
+      color: #555;
+    }
+
+    /* ── Leyenda de estado ── */
+    .legend {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 28px;
+      font-size: 12px;
+    }
+    .badge {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 11px;
+    }
+    .badge.ok       { background: #d4edda; color: #155724; }
+    .badge.revisar  { background: #fff3cd; color: #856404; }
+    .badge.agregar  { background: #fde8e8; color: #7f1d1d; }
+
+    /* ── Sección de devolución ── */
+    .devolucion {
+      margin-bottom: 36px;
+      border-left: 4px solid #1e3a5f;
+      padding-left: 18px;
+    }
+    .devolucion.ok      { border-color: #28a745; }
+    .devolucion.revisar { border-color: #ffc107; }
+    .devolucion.agregar { border-color: #dc3545; }
+
+    .devolucion-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+    .devolucion-header h2 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e3a5f;
+    }
+
+    .quote-profesor {
+      background: #f0f4fa;
+      border-left: 3px solid #1e3a5f;
+      padding: 8px 12px;
+      font-style: italic;
+      font-size: 12px;
+      color: #444;
+      margin-bottom: 12px;
+      border-radius: 0 4px 4px 0;
+    }
+
+    p { margin-bottom: 10px; }
+
+    ul, ol {
+      margin: 8px 0 10px 20px;
+    }
+    li { margin-bottom: 4px; }
+
+    strong { font-weight: 600; }
+
+    /* ── Tablas ── */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 16px 0;
+      font-size: 12px;
+    }
+    thead th {
+      background: #1e3a5f;
+      color: #fff;
+      padding: 8px 10px;
+      text-align: left;
+      font-weight: 600;
+    }
+    tbody tr:nth-child(even) { background: #f5f8fc; }
+    tbody td {
+      padding: 7px 10px;
+      border-bottom: 1px solid #dde3ec;
+      vertical-align: top;
+    }
+
+    /* ── Alerta / nota ── */
+    .alerta {
+      background: #fff8e1;
+      border: 1px solid #f0c040;
+      border-radius: 6px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 12px;
+    }
+    .alerta strong { color: #7a5000; }
+
+    .ok-box {
+      background: #f0faf3;
+      border: 1px solid #a3d9b0;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 12px;
+      color: #155724;
+    }
+
+    /* ── Resumen final ── */
+    .resumen {
+      background: #f0f4fa;
+      border-radius: 8px;
+      padding: 20px 24px;
+      margin-top: 40px;
+    }
+    .resumen h2 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e3a5f;
+      margin-bottom: 14px;
+    }
+    .resumen table thead th { background: #1e3a5f; }
+
+    /* ── Print ── */
+    @media print {
+      body { padding: 20px 30px; }
+      .devolucion { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══════════════════════════════════════════════════════════ -->
+<div class="header">
+  <h1>Devoluciones – Primera Parte TPI</h1>
+  <div class="meta">
+    Empresa analizada: <strong>TalentNode SRL</strong> &nbsp;|&nbsp;
+    Materia: Sistemas Administrativos &nbsp;|&nbsp;
+    Cátedra: Arzamendia &nbsp;|&nbsp;
+    Fecha: 21 de abril de 2026
+  </div>
+</div>
+
+<!-- ══ 1. ORGANIZACIÓN COMO SISTEMA ════════════════════════════════════ -->
+<div class="devolucion agregar">
+  <div class="devolucion-header">
+    <span class="badge agregar">REVISAR</span>
+    <h2>1. ¿Cuáles son los elementos de una organización como sistema?</h2>
+  </div>
+  <div class="quote-profesor">"¿Cuáles son los elementos de una organización como sistema? Revisar"</div>
+
+  <p><strong>El problema:</strong> La sección "Análisis de la Organización como Sistema" solo desarrolla el <em>ciclo funcional</em> (entradas → procesos → salidas → retroalimentación). El profesor espera también los <strong>elementos constitutivos</strong> del sistema, que son distintos al ciclo.</p>
+
+  <p><strong>Qué falta agregar:</strong></p>
+  <ul>
+    <li><strong>Subsistemas internos</strong> (según Gilli): técnico (tecnología y procesos de trabajo), social (personas, grupos, relaciones informales) y administrativo (estructura formal, jerarquía, coordinación).</li>
+    <li><strong>Límites del sistema</strong>: qué queda dentro y qué queda fuera. En TalentNode esto es relevante porque la frontera con los freelancers externos es difusa — están representados en el organigrama pero no son empleados en relación de dependencia.</li>
+    <li><strong>Propósito u objetivo del sistema</strong> como elemento articulador de los demás.</li>
+    <li><strong>Entorno</strong>: mencionado pero solo como contexto; dentro del enfoque sistémico es un elemento formal del modelo.</li>
+  </ul>
+
+  <div class="alerta">
+    <strong>Cómo corregirlo:</strong> Agregar antes del ciclo E-P-S-R un párrafo o tabla que enumere los elementos del sistema (subsistemas técnico, social y administrativo; límites; entorno; propósito) y los identifique concretamente en TalentNode. El ciclo puede quedar como complemento, no como el único contenido de la sección.
+  </div>
+</div>
+
+<!-- ══ 2. MINTZBERG ═════════════════════════════════════════════════════ -->
+<div class="devolucion ok">
+  <div class="devolucion-header">
+    <span class="badge ok">OK</span>
+    <h2>2. Partes básicas según Mintzberg</h2>
+  </div>
+  <div class="ok-box">Sin observaciones. El análisis de las cinco partes básicas aplicadas a TalentNode está bien desarrollado y justificado.</div>
+</div>
+
+<!-- ══ 3. DRUCKER ═══════════════════════════════════════════════════════ -->
+<div class="devolucion ok">
+  <div class="devolucion-header">
+    <span class="badge ok">OK</span>
+    <h2>3. Actividades según Drucker</h2>
+  </div>
+  <div class="ok-box">Sin observaciones. La clasificación de actividades (productoras de resultados, de apoyo, de dirección) está bien aplicada a TalentNode, con ejemplos concretos y análisis crítico de la debilidad en las actividades de "conciencia".</div>
+</div>
+
+<!-- ══ 4. PUESTO ═════════════════════════════════════════════════════════ -->
+<div class="devolucion agregar">
+  <div class="devolucion-header">
+    <span class="badge agregar">AGREGAR</span>
+    <h2>4. Análisis del puesto: los 3 parámetros de diseño</h2>
+  </div>
+  <div class="quote-profesor">"Falta el análisis del puesto de acuerdo a los 3 parámetros (especialización, formalización y capacitación &amp; adoctrinamiento)"</div>
+
+  <p><strong>El problema:</strong> La descripción del puesto de Fullstack Developer es completa (misión, funciones, relaciones, autoridad, perfil), pero en ningún momento se aplica el <strong>marco analítico de los 3 parámetros de diseño del puesto</strong> de Mintzberg. La descripción existe; el análisis falta.</p>
+
+  <p><strong>Qué agregar:</strong> Una subsección dentro de PUESTO titulada "Análisis según parámetros de diseño" con la siguiente tabla:</p>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Parámetro</th>
+        <th>Dimensión</th>
+        <th>Aplicación al Fullstack Developer</th>
+        <th>Resultado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td rowspan="2"><strong>Especialización</strong></td>
+        <td>Horizontal</td>
+        <td>Realiza tareas muy diversas: desarrollo frontend, backend, gestión de base de datos, DevOps, atención de requerimientos de otras áreas. Poca división del trabajo.</td>
+        <td><strong>Baja</strong> (puesto amplio)</td>
+      </tr>
+      <tr>
+        <td>Vertical</td>
+        <td>Toma decisiones técnicas autónomas (arquitectura, estructura de código), pero los deployments a producción requieren coordinación con el CTO. Control parcial sobre su propio trabajo.</td>
+        <td><strong>Media</strong></td>
+      </tr>
+      <tr>
+        <td><strong>Formalización</strong></td>
+        <td>—</td>
+        <td>No existen manuales de procedimientos ni normas escritas que regulen su trabajo. Opera por criterio propio dentro de límites tácitos. El flujo de tareas se gestiona en Jira pero sin procesos estandarizados.</td>
+        <td><strong>Baja</strong></td>
+      </tr>
+      <tr>
+        <td rowspan="2"><strong>Capacitación y adoctrinamiento</strong></td>
+        <td>Capacitación</td>
+        <td>Requiere dominio de al menos 2 stacks tecnológicos, gestión de bases de datos, DevOps y manejo avanzado de IA. No exige título formal, pero el nivel técnico requerido es alto.</td>
+        <td><strong>Alta</strong></td>
+      </tr>
+      <tr>
+        <td>Adoctrinamiento</td>
+        <td>Debe internalizar la cultura startup, criterio autónomo con IA, comunicación con perfiles no técnicos y proactividad en la propuesta de mejoras. La empresa no tiene un programa formal de inducción.</td>
+        <td><strong>Medio-alto</strong> (informal)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="alerta">
+    <strong>Conclusión del análisis:</strong> El puesto combina baja especialización horizontal (mucho alcance de tareas), baja formalización y alta capacitación. Esto es coherente con lo que Mintzberg predice para organizaciones orgánicas y jóvenes: los puestos son amplios, poco reglamentados y requieren perfiles calificados que puedan operar con autonomía.
+  </div>
+</div>
+
+<!-- ══ 5. ORGANIGRAMA ════════════════════════════════════════════════════ -->
+<div class="devolucion revisar">
+  <div class="devolucion-header">
+    <span class="badge revisar">REVISAR</span>
+    <h2>5. El organigrama: fuente y diseño</h2>
+  </div>
+  <div class="quote-profesor">"¿El Organigrama se los dio la empresa? ¿Está correctamente diseñado?"</div>
+
+  <p>El profesor hace dos preguntas que hay que responder explícitamente en el TP.</p>
+
+  <p><strong>A) ¿Lo dio la empresa o lo construyeron ustedes?</strong><br>
+  El trabajo no lo aclara. Hay que agregar una oración que diga: si fue provisto por TalentNode, indicarlo y señalar si refleja la realidad observada en las entrevistas. Si lo construyeron ustedes a partir de la información relevada, también aclararlo. Esto no es un detalle menor — el profesor necesita saber si están describiendo la estructura formal declarada por la empresa o la estructura real observada por el grupo.</p>
+
+  <p><strong>B) ¿Está correctamente diseñado?</strong> Hay tres problemas a revisar:</p>
+  <ul>
+    <li>
+      <strong>Gerencia General duplicada:</strong> Aparece un box "Gerencia General (CEO, CPO, CTO)" encima de los tres founders como nivel separado. Si los tres founders <em>son</em> la gerencia general, esto genera un nivel redundante. Debería representarse como un único nodo colegiado, sin un box extra arriba.
+    </li>
+    <li>
+      <strong>Los Freelance Developers son externos:</strong> Aparecen bajo el Fullstack Developer con línea sólida igual que el resto, pero no son empleados en relación de dependencia. Deberían representarse con <strong>línea punteada</strong> o fuera del cuadro que delimita la organización interna.
+    </li>
+    <li>
+      <strong>Falta leyenda de tipo de líneas:</strong> Un organigrama correctamente diseñado distingue líneas de mando (sólidas), líneas funcionales y líneas de staff. Si el Financial Administration Coordinator o el People Manager tienen vínculos de staff con otras áreas, eso debería reflejarse gráficamente.
+    </li>
+  </ul>
+</div>
+
+<!-- ══ 6. FACTORES SITUACIONALES ════════════════════════════════════════ -->
+<div class="devolucion ok">
+  <div class="devolucion-header">
+    <span class="badge ok">OK</span>
+    <h2>6. Factores Situacionales o contingentes</h2>
+  </div>
+  <div class="ok-box">Sin observaciones. El análisis de los factores situacionales (edad y dimensión, ambiente, sistema técnico, poder) es el punto más sólido del trabajo: completo, bien estructurado, con hipótesis de Mintzberg aplicadas y verificadas, y con capacidad crítica para identificar congruencias y tensiones.</div>
+</div>
+
+<!-- ══ 7. TIPOLOGÍA ══════════════════════════════════════════════════════ -->
+<div class="devolucion agregar">
+  <div class="devolucion-header">
+    <span class="badge agregar">REVISAR</span>
+    <h2>7. Tipología: ¿"funcional con vínculos horizontales" es coherente?</h2>
+  </div>
+  <div class="quote-profesor">"La tipología funcional con vínculos horizontales es coherente y congruente con las características que fueron desarrollando en el TPI? Revisar"</div>
+
+  <p><strong>Este es el problema más importante del trabajo.</strong> Hay una <strong>contradicción interna</strong> que el profesor detectó con precisión.</p>
+
+  <p>A lo largo de todo el TPI, el grupo describe a TalentNode con estos rasgos:</p>
+  <ul>
+    <li>Empresa joven (5 años) y pequeña (16 personas)</li>
+    <li>Baja formalización; roles no completamente estandarizados</li>
+    <li>Coordinación por <strong>supervisión directa</strong> y <strong>ajuste mutuo</strong></li>
+    <li>Línea media incipiente / en formación</li>
+    <li>Áreas recién comenzando a delimitarse</li>
+    <li>Centralización fuerte en los tres founders</li>
+  </ul>
+
+  <div class="alerta">
+    <strong>La contradicción:</strong> En la propia conclusión del TP se escribe: <em>"TalentNode exhibe exactamente los rasgos que Mintzberg predice para una organización joven y pequeña: baja formalización, <u>estructura simple</u>, supervisión directa y línea media en desarrollo."</em><br><br>
+    Sin embargo, en la sección Tipología se la clasifica como <strong>"funcional con vínculos horizontales"</strong>. El trabajo se contradice a sí mismo.
+  </div>
+
+  <p><strong>Por qué la tipología actual no es coherente:</strong></p>
+  <p>Una estructura funcional con vínculos horizontales implica:</p>
+  <ul>
+    <li>Áreas funcionales formalmente consolidadas con roles claros</li>
+    <li>Suficiente tamaño para que la diferenciación funcional genere silos que requieran puentes horizontales</li>
+    <li>Mecanismos de coordinación lateral más o menos institucionalizados</li>
+  </ul>
+  <p>TalentNode hoy tiene áreas en formación, coordinación informal y vínculos horizontales que el propio TP describe como <em>"informales y dependientes de personas específicas, no de mecanismos institucionales"</em>. Eso no es una estructura funcional consolidada.</p>
+
+  <p><strong>Qué debería decir:</strong></p>
+  <p>La tipología más coherente con todo lo desarrollado es la <strong>Estructura Simple</strong> de Mintzberg (equivalente a la "estructura emprendedora" en Gilli), que es exactamente lo que Mintzberg predice para organizaciones jóvenes, pequeñas, con ápice dominante y coordinación informal. Se pueden agregar dos matices:</p>
+  <ul>
+    <li>Que <em>tiende hacia</em> una estructura funcional a medida que las áreas se consoliden y crezca el plantel.</li>
+    <li>Que los vínculos horizontales emergentes son una señal de esa transición, pero que hoy no alcanzan para definir la tipología.</li>
+  </ul>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Característica observada en TalentNode</th>
+        <th>¿Corresponde a Estructura Simple?</th>
+        <th>¿Corresponde a Funcional con vínculos?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td>Empresa joven y pequeña (5 años, 16 personas)</td><td>✓ Sí</td><td>✗ No típicamente</td></tr>
+      <tr><td>Coordinación por supervisión directa</td><td>✓ Sí — mecanismo central</td><td>✗ No es el mecanismo principal</td></tr>
+      <tr><td>Centralización en founders (ápice)</td><td>✓ Sí — rasgo definitorio</td><td>✗ Implica mayor delegación</td></tr>
+      <tr><td>Baja formalización</td><td>✓ Sí</td><td>Parcial — funcional puede ser informal</td></tr>
+      <tr><td>Línea media incipiente</td><td>✓ Sí — en desarrollo</td><td>✗ Requiere línea media consolidada</td></tr>
+      <tr><td>Vínculos horizontales informales</td><td>Compatible — emergentes</td><td>✓ Sí, pero aquí son informales</td></tr>
+      <tr><td>Áreas funcionales diferenciadas</td><td>Parcial — recién formándose</td><td>✓ Sí — requiere áreas consolidadas</td></tr>
+    </tbody>
+  </table>
+
+  <div class="alerta">
+    <strong>Recomendación concreta:</strong> Cambiar la tipología a <strong>Estructura Simple</strong>, aclarar que se observan elementos funcionales emergentes (agrupamiento por función, vínculos horizontales incipientes), y señalar que la trayectoria esperable es hacia una estructura funcional a medida que la empresa crezca. Esto es coherente con el resto del trabajo y con la propia conclusión que ya habían escrito.
+  </div>
+</div>
+
+<!-- ══ RESUMEN ═══════════════════════════════════════════════════════════ -->
+<div class="resumen">
+  <h2>Resumen de correcciones</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Punto</th>
+        <th>Estado</th>
+        <th>Acción requerida</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>1</td>
+        <td>Organización como sistema</td>
+        <td><span class="badge agregar">REVISAR</span></td>
+        <td>Agregar subsistemas, límites y elementos constitutivos (no solo ciclo E-P-S-R)</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Partes básicas Mintzberg</td>
+        <td><span class="badge ok">OK</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>Actividades Drucker</td>
+        <td><span class="badge ok">OK</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>Análisis del puesto</td>
+        <td><span class="badge agregar">AGREGAR</span></td>
+        <td>Incorporar tabla con los 3 parámetros: especialización (H y V), formalización, capacitación y adoctrinamiento</td>
+      </tr>
+      <tr>
+        <td>5</td>
+        <td>Organigrama</td>
+        <td><span class="badge revisar">REVISAR</span></td>
+        <td>Aclarar fuente + corregir diseño: Gerencia General duplicada, freelancers con línea punteada, agregar leyenda de tipos de línea</td>
+      </tr>
+      <tr>
+        <td>6</td>
+        <td>Factores Situacionales</td>
+        <td><span class="badge ok">OK</span></td>
+        <td>—</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>Tipología</td>
+        <td><span class="badge agregar">REVISAR</span></td>
+        <td>Cambiar de "funcional con vínculos horizontales" a Estructura Simple. La descripción del trabajo contradice la tipología elegida.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+<div style="margin-top:40px; padding-top:20px; border-top:1px solid #dde3ec; text-align:center;">
+  <a href="index.html" style="font-size:12px; color:#1e3a5f; text-decoration:none; font-family:Arial,sans-serif;">← Volver al resumen de la materia</a>
+</div>
+
+</body>
+</html>
