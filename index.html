@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resumen Parcial 1 — Sistemas Administrativos</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; font-size: 14px; background: #f0f2f5; color: #1a1a2e; }
+
+  /* HEADER */
+  header { background: #1a1a2e; color: white; padding: 16px 24px; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+  header h1 { font-size: 16px; font-weight: 600; letter-spacing: 0.3px; }
+  header p { font-size: 11px; color: #94a3b8; margin-top: 2px; }
+
+  /* TABS */
+  nav { background: #16213e; display: flex; flex-wrap: wrap; padding: 0 16px; gap: 2px; position: sticky; top: 56px; z-index: 99; border-bottom: 2px solid #0f3460; }
+  nav button { background: none; border: none; color: #94a3b8; padding: 10px 14px; cursor: pointer; font-size: 12px; font-weight: 500; border-bottom: 3px solid transparent; transition: all 0.15s; white-space: nowrap; }
+  nav button:hover { color: white; }
+  nav button.active { color: white; border-bottom-color: var(--accent); }
+
+  /* CONTENT */
+  main { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  /* SECTIONS */
+  .section { background: white; border-radius: 8px; padding: 20px; margin-bottom: 16px; border-left: 4px solid var(--accent); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+  .section h2 { font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .section h3 { font-size: 13px; font-weight: 600; color: #334155; margin: 14px 0 8px; border-bottom: 1px solid #e2e8f0; padding-bottom: 4px; }
+
+  /* TABLES */
+  table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 13px; }
+  th { background: var(--accent); color: white; padding: 7px 10px; text-align: left; font-weight: 600; font-size: 12px; }
+  td { padding: 6px 10px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  tr:hover td { background: #f1f5f9; }
+
+  /* BADGES */
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; margin: 2px; }
+  .b-blue { background: #dbeafe; color: #1e40af; }
+  .b-green { background: #dcfce7; color: #166534; }
+  .b-red { background: #fee2e2; color: #991b1b; }
+  .b-orange { background: #ffedd5; color: #9a3412; }
+  .b-purple { background: #f3e8ff; color: #6b21a8; }
+  .b-gray { background: #f1f5f9; color: #475569; }
+
+  /* CARDS GRID */
+  .grid { display: grid; gap: 10px; margin: 8px 0; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-5 { grid-template-columns: repeat(5, 1fr); }
+  .card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; padding: 12px; }
+  .card .num { font-size: 22px; font-weight: 700; color: var(--accent); }
+  .card .label { font-size: 12px; font-weight: 600; color: #334155; margin: 4px 0 2px; }
+  .card .desc { font-size: 11px; color: #64748b; line-height: 1.4; }
+
+  /* ALERT */
+  .tip { background: #fffbeb; border: 1px solid #fcd34d; border-radius: 6px; padding: 10px 12px; font-size: 12px; color: #92400e; margin: 8px 0; }
+  .tip strong { font-weight: 700; }
+
+  /* MINI LIST */
+  ul.clean { list-style: none; padding: 0; }
+  ul.clean li { padding: 4px 0; padding-left: 16px; position: relative; font-size: 13px; }
+  ul.clean li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+  /* TWO COL */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+  /* ACCENT COLORS PER TAB */
+  [data-tab="u1"] { --accent: #2563eb; }
+  [data-tab="u2a"] { --accent: #16a34a; }
+  [data-tab="u2b"] { --accent: #0891b2; }
+  [data-tab="u3a"] { --accent: #d97706; }
+  [data-tab="u3b"] { --accent: #dc2626; }
+  [data-tab="u3c"] { --accent: #7c3aed; }
+
+  /* PENTAGON SVG */
+  .pentagon-wrap { display: flex; justify-content: center; margin: 16px 0; }
+
+  /* EVAL TABLE */
+  .eval-b { color: #16a34a; font-weight: 700; }
+  .eval-m { color: #dc2626; font-weight: 700; }
+  .eval-q { color: #d97706; font-weight: 700; }
+
+  @media (max-width: 600px) {
+    .grid-2, .grid-3, .grid-5, .two-col { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Resumen Parcial 1 — Sistemas Administrativos 274-8</h1>
+  <p>Parcial: Lunes 27/04/2026 &nbsp;·&nbsp; Unidades 1, 2 y 3</p>
+</header>
+
+<nav>
+  <button class="active" onclick="showTab('u1',this)" style="--accent:#2563eb">U1 · Organización como Sistema</button>
+  <button onclick="showTab('u2a',this)" style="--accent:#16a34a">U2a · Diseño del Puesto</button>
+  <button onclick="showTab('u2b',this)" style="--accent:#0891b2">U2b · Superestructura</button>
+  <button onclick="showTab('u3a',this)" style="--accent:#d97706">U3a · Factores Situacionales</button>
+  <button onclick="showTab('u3b',this)" style="--accent:#dc2626">U3b · Tipologías</button>
+  <button onclick="showTab('u3c',this)" style="--accent:#7c3aed">U3c · Formas y Fuerzas</button>
+</nav>
+
+<main>
+
+<!-- ===================== U1 ===================== -->
+<div class="tab-content active" id="u1" data-tab="u1">
+
+  <div class="section">
+    <h2>La organización como sistema abierto</h2>
+    <div class="grid grid-2">
+      <div>
+        <h3>4 Características (Gilli)</h3>
+        <table>
+          <tr><th>Característica</th><th>Qué significa</th></tr>
+          <tr><td><strong>Artificialidad</strong></td><td>Creada intencionalmente por personas</td></tr>
+          <tr><td><strong>Finalidad</strong></td><td>Tiene objetivos definidos</td></tr>
+          <tr><td><strong>Apertura</strong></td><td>Intercambia con el entorno: inputs → proceso → outputs → retroalimentación</td></tr>
+          <tr><td><strong>Complejidad</strong></td><td>Partes interrelacionadas que se influyen entre sí</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3>5 Elementos del diseño (Gilli)</h3>
+        <div class="grid grid-5">
+          <div class="card"><div class="label">Estrategia</div><div class="desc">Guía central del diseño</div></div>
+          <div class="card"><div class="label">Estructura</div><div class="desc">Roles y jerarquías</div></div>
+          <div class="card"><div class="label">Procesos</div><div class="desc">Flujos de trabajo</div></div>
+          <div class="card"><div class="label">Personas</div><div class="desc">Capital humano</div></div>
+          <div class="card"><div class="label">Tecnología</div><div class="desc">TIC de soporte</div></div>
+        </div>
+        <div class="tip"><strong>Enfoque sistémico:</strong> cambiar un elemento afecta a todos los demás. <strong>Enfoque contingente:</strong> no hay un único diseño correcto — depende del contexto.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>5 Partes de la organización (Mintzberg)</h2>
+    <div class="grid grid-5">
+      <div class="card"><div class="label">Ápice / Cumbre estratégica</div><div class="desc">CEO, directorio. Define misión y estrategia, gestiona el entorno.</div></div>
+      <div class="card"><div class="label">Línea media</div><div class="desc">Gerentes intermedios. Conecta ápice con núcleo.</div></div>
+      <div class="card"><div class="label">Núcleo operativo</div><div class="desc">Operarios, médicos. Produce el bien o servicio.</div></div>
+      <div class="card"><div class="label">Tecnoestructura</div><div class="desc">Analistas, RRHH. Estandariza el trabajo de otros.</div></div>
+      <div class="card"><div class="label">Staff de apoyo</div><div class="desc">Legal, cafetería. Soporte indirecto fuera de la cadena principal.</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>5 Mecanismos de coordinación (Mintzberg)</h2>
+    <table>
+      <tr><th>Mecanismo</th><th>Cómo coordina</th><th>Cuándo se usa</th></tr>
+      <tr><td><strong>Ajuste mutuo</strong></td><td>Comunicación informal entre personas</td><td>Orgs. muy pequeñas o muy complejas (adhocracias)</td></tr>
+      <tr><td><strong>Supervisión directa</strong></td><td>Un jefe da órdenes y controla resultados</td><td>Orgs. simples, startups, crisis</td></tr>
+      <tr><td><strong>Normalización de procesos</strong></td><td>El procedimiento está definido de antemano</td><td>Trabajo rutinario y repetitivo</td></tr>
+      <tr><td><strong>Normalización de outputs</strong></td><td>Se define qué lograr, no cómo</td><td>Divisiones autónomas</td></tr>
+      <tr><td><strong>Normalización de habilidades</strong></td><td>Se contrata a alguien ya formado</td><td>Profesionales: médicos, contadores</td></tr>
+    </table>
+    <div class="tip">Progresión con el crecimiento: ajuste mutuo → supervisión directa → estandarización. El ajuste mutuo aparece también en las organizaciones más complejas.</div>
+  </div>
+
+  <div class="section">
+    <h2>Tipos de actividades / tareas (Drucker — Cap. 42)</h2>
+    <table>
+      <tr><th>Tipo</th><th>Descripción</th><th>Regla clave</th></tr>
+      <tr><td><strong>Productoras de resultados</strong></td><td>Generan valor directamente (ingresos, resultados mensurables, información)</td><td>Son los elementos estructurales fundamentales — deben tener posición de primer nivel</td></tr>
+      <tr><td><strong>De apoyo</strong></td><td>Necesarias para que el trabajo fluya; no generan valor directo (conciencia, asesoría, relaciones)</td><td>Nunca mezclarlas con productoras; preferir separación</td></tr>
+      <tr><td><strong>De higiene y mantenimiento</strong></td><td>Si está bien nadie la nota; si falla, todo se resiente</td><td>Mantenerlas separadas de todas las demás; candidatas a tercerización</td></tr>
+      <tr><td><strong>De dirección empresaria</strong></td><td>Conducción estratégica general</td><td>Se analiza por separado</td></tr>
+    </table>
+    <h3>Subdivisión productoras de resultados</h3>
+    <div class="grid grid-3">
+      <div class="card"><div class="label">Productoras de ingresos</div><div class="desc">Venta, innovación, función de tesoro</div></div>
+      <div class="card"><div class="label">Que contribuyen a resultados</div><div class="desc">Manufactura, compras, distribución, ingeniería</div></div>
+      <div class="card"><div class="label">De información</div><div class="desc">Contabilidad, investigación operativa. "Bivalentes": deben estar simultáneamente centralizadas y descentralizadas</div></div>
+    </div>
+    <h3>4 pasos para armar la estructura (Drucker)</h3>
+    <ul class="clean">
+      <li>Análisis de las <strong>actividades fundamentales</strong> — ¿qué hay que hacer excepcionalmente bien?</li>
+      <li>Análisis de los <strong>aportes</strong> — ¿cuál es la contribución de cada actividad?</li>
+      <li>Análisis de las <strong>decisiones</strong> — ¿qué decisiones se necesitan y en qué nivel?</li>
+      <li>Análisis de las <strong>relaciones</strong> — ¿con quién trabaja cada componente?</li>
+    </ul>
+  </div>
+
+  <div class="section">
+    <h2>Modelo ACME — 7 áreas funcionales</h2>
+    <div class="tip">Origen: Association of Consulting Management Engineers, 1957. Modelo mecanicista de la Escuela Neoclásica. Útil como marco didáctico.</div>
+    <div class="grid grid-3" style="margin-top:8px">
+      <div class="card"><div class="label">Investigación y Desarrollo</div><div class="desc">Crear y mejorar productos, procesos y servicios</div></div>
+      <div class="card"><div class="label">Producción</div><div class="desc">Fabricar coordinando mano de obra, materiales e instalaciones</div></div>
+      <div class="card"><div class="label">Comercialización</div><div class="desc">Dirigir el flujo de mercaderías del productor al consumidor</div></div>
+      <div class="card"><div class="label">Finanzas y Control</div><div class="desc">Planificar y medir las operaciones monetarias</div></div>
+      <div class="card"><div class="label">Administración de Personal</div><div class="desc">Proveer estructura eficiente y empleados calificados</div></div>
+      <div class="card"><div class="label">Relaciones Externas</div><div class="desc">Gestionar imagen y relaciones con el público</div></div>
+      <div class="card"><div class="label">Secretaría y Legales</div><div class="desc">Cumplimiento legal y asesoramiento jurídico</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Estrategia</h2>
+    <div class="tip"><strong>La estructura se subordina a la estrategia</strong> (Drucker / Chandler).</div>
+    <div class="two-col" style="margin-top:12px">
+      <div>
+        <h3>5 P de la estrategia (Mintzberg)</h3>
+        <table>
+          <tr><th>P</th><th>Definición</th></tr>
+          <tr><td><strong>Plan</strong></td><td>Guía intencional hacia el futuro</td></tr>
+          <tr><td><strong>Patrón</strong></td><td>Comportamiento consistente en el tiempo, haya sido planeado o no</td></tr>
+          <tr><td><strong>Posición</strong></td><td>Lugar elegido en el mercado</td></tr>
+          <tr><td><strong>Perspectiva</strong></td><td>Visión interna del mundo de la organización</td></tr>
+          <tr><td><strong>Trampa / Pauta</strong></td><td>Maniobra para superar a un competidor</td></tr>
+        </table>
+        <div class="tip"><strong>Deliberada:</strong> lo que se planeó y ejecutó exactamente. <strong>Emergente:</strong> patrones que surgieron sin estar planeados. En la práctica, siempre es una mezcla.</div>
+      </div>
+      <div>
+        <h3>Porter — 3 estrategias genéricas</h3>
+        <table>
+          <tr><th>Estrategia</th><th>Estructura apropiada</th></tr>
+          <tr><td>Liderazgo en costos</td><td>Funcional, centralizada, muy formalizada</td></tr>
+          <tr><td>Diferenciación</td><td>Orgánica, creativa, flexible</td></tr>
+          <tr><td>Enfoque / Concentración</td><td>Nicho específico</td></tr>
+        </table>
+        <h3 style="margin-top:12px">Porter — 5 fuerzas competitivas</h3>
+        <ul class="clean">
+          <li>Rivalidad entre competidores existentes</li>
+          <li>Amenaza de nuevos entrantes</li>
+          <li>Amenaza de productos sustitutos</li>
+          <li>Poder de negociación de proveedores</li>
+          <li>Poder de negociación de compradores</li>
+        </ul>
+        <h3 style="margin-top:12px">Miles & Snow</h3>
+        <table>
+          <tr><th>Tipo</th><th>Lógica</th><th>Estructura</th></tr>
+          <tr><td>Explorador</td><td>Innovación</td><td>Orgánica, flexible</td></tr>
+          <tr><td>Defensor</td><td>Eficiencia en nicho</td><td>Mecánica, funcional</td></tr>
+          <tr><td>Analizador</td><td>Mezcla</td><td>Matricial/mixta</td></tr>
+          <tr><td>Reactivo</td><td>Sin estrategia</td><td>Disfuncional</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /u1 -->
+
+<!-- ===================== U2A ===================== -->
+<div class="tab-content" id="u2a" data-tab="u2a">
+
+  <div class="section">
+    <h2>3 niveles de análisis (Gilli)</h2>
+    <div class="grid grid-3">
+      <div class="card"><div class="num">1</div><div class="label">Funcional</div><div class="desc">Áreas y jerarquías → Organigrama</div></div>
+      <div class="card"><div class="num">2</div><div class="label">De procesos</div><div class="desc">Flujo de trabajo → Cursograma / flujograma</div></div>
+      <div class="card"><div class="num">3</div><div class="label">Del puesto</div><div class="desc">Individuo → Descripción del cargo</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>4 Parámetros del puesto (Mintzberg)</h2>
+    <div class="two-col">
+      <div>
+        <h3>Especialización</h3>
+        <table>
+          <tr><th>Dimensión</th><th>Alta</th><th>Baja</th></tr>
+          <tr><td><strong>Horizontal</strong> (cuántas tareas)</td><td>Pocas tareas, muy especializado. Puesto <em>reducido</em></td><td>Muchas tareas distintas. Puesto <em>ampliado</em></td></tr>
+          <tr><td><strong>Vertical</strong> (control sobre el trabajo)</td><td>Solo ejecuta, otro decide. Puesto <em>reducido</em></td><td>Planifica y ejecuta. Puesto <em>ampliado</em></td></tr>
+        </table>
+        <div class="tip"><strong>Sistema técnico → Especialización vertical:</strong> a mayor regulación del sistema técnico → menor autonomía del operario → mayor especialización vertical.</div>
+        <table style="margin-top:8px">
+          <tr><th>Tipo de trabajo</th><th>Esp. H</th><th>Esp. V</th><th>Formal.</th><th>Capac.</th></tr>
+          <tr><td>No calificado</td><td>Alta</td><td>Alta</td><td>Alta</td><td>Baja</td></tr>
+          <tr><td>Profesional</td><td>Alta</td><td>Baja</td><td>Baja</td><td>Alta</td></tr>
+          <tr><td>Artesano</td><td>Baja</td><td>Baja</td><td>Baja</td><td>Media</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3>Formalización del comportamiento</h3>
+        <p style="font-size:13px; color:#475569; margin-bottom:8px">Nivel en que el comportamiento está regulado por normas y procedimientos escritos.</p>
+        <ul class="clean">
+          <li>Por el <strong>puesto</strong> — descripción del cargo</li>
+          <li>Por el <strong>flujo de trabajo</strong> — procedimientos</li>
+          <li>Por <strong>reglas</strong> generales — reglamento</li>
+        </ul>
+        <div class="tip" style="margin-top:10px">Alta formalización = trabajo burocrático. Baja = trabajo orgánico.</div>
+        <h3 style="margin-top:14px">Capacitación</h3>
+        <p style="font-size:13px; color:#475569">Conocimientos y habilidades requeridas. <strong>Sustituto de la formalización</strong> cuando el trabajo es complejo.</p>
+        <h3 style="margin-top:14px">Adoctrinamiento</h3>
+        <p style="font-size:13px; color:#475569">Internalización de los valores y cultura de la organización (socialización).</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Estructuras mecánicas vs. orgánicas (Burns &amp; Stalker)</h2>
+    <table>
+      <tr><th>Característica</th><th>Mecánica</th><th>Orgánica</th></tr>
+      <tr><td>Tareas</td><td>Muy definidas, no se redefinen</td><td>Se redefinen continuamente según el problema</td></tr>
+      <tr><td>Estandarización</td><td>Alta</td><td>Baja</td></tr>
+      <tr><td>Relaciones laterales</td><td>Pocas / débiles</td><td>Fuertes, numerosas</td></tr>
+      <tr><td>Formalización</td><td>Alta</td><td>Baja</td></tr>
+      <tr><td>Compromiso del empleado</td><td>Alineado con su función específica</td><td>Alto compromiso con los objetivos globales</td></tr>
+      <tr><td>Relación con el exterior</td><td>Núcleo operativo aislado del cliente</td><td>Contacto directo con clientes y entorno</td></tr>
+      <tr><td>Ambiente apropiado</td><td><span class="badge b-blue">Estable</span></td><td><span class="badge b-orange">Dinámico / complejo</span></td></tr>
+    </table>
+    <div class="tip"><strong>Atención:</strong> baja formalización sola NO implica estructura orgánica. Una empresa pequeña con supervisión directa puede tener baja formalización sin ser orgánica — no hay opciones reales de diseño alternativo.</div>
+  </div>
+
+  <div class="section">
+    <h2>Descripción formal del cargo (Drucker Cap. 32 + Gilli)</h2>
+    <div class="two-col">
+      <div>
+        <h3>6 Componentes</h3>
+        <table>
+          <tr><th>Componente</th><th>Qué incluye</th></tr>
+          <tr><td><strong>Misión</strong></td><td>Para qué existe el puesto. Permanente. Formato: ACCIÓN + RESULTADO</td></tr>
+          <tr><td><strong>Funciones</strong></td><td>Tareas y responsabilidades concretas. "El aquí y el ahora."</td></tr>
+          <tr><td><strong>Autoridad</strong></td><td>Qué puede decidir y hasta dónde (límites de su poder de decisión)</td></tr>
+          <tr><td><strong>Información</strong></td><td>Qué emite y qué recibe, a quién y de quién</td></tr>
+          <tr><td><strong>Relaciones</strong></td><td>Ascendentes (depende de), descendentes (supervisa a), laterales (funcionales)</td></tr>
+          <tr><td><strong>Perfil</strong></td><td>Formación, experiencia, competencias, actitud</td></tr>
+        </table>
+        <div class="tip" style="margin-top:8px">Algunos formatos fusionan Autoridad dentro de Funciones. Lo importante es incluir todos los contenidos. Base: Drucker Cap. 32; Perfil agregado por la cátedra.</div>
+      </div>
+      <div>
+        <h3>TIPS de redacción</h3>
+        <ul class="clean">
+          <li><strong>Misión:</strong> formato ACCIÓN + RESULTADO.<br><em>"Supervisar las actividades de compras A FIN DE satisfacer los requerimientos."</em></li>
+          <li>Se describe el <strong>puesto</strong>, no su ocupante</li>
+          <li>Verbos en <strong>infinitivo</strong></li>
+          <li>Labor de <strong>síntesis</strong> — un cargo con 10 hojas está mal redactado</li>
+          <li>Verbos que definen con <strong>precisión el rol</strong> — no es lo mismo gerenciar / dirigir / supervisar / coordinar / liderar</li>
+          <li>Evitar <strong>adjetivos calificativos</strong> — nadie espera que un reporte no sea preciso</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /u2a -->
+
+<!-- ===================== U2B ===================== -->
+<div class="tab-content" id="u2b" data-tab="u2b">
+
+  <div class="section">
+    <h2>Bases de agrupamiento (Mintzberg)</h2>
+    <div class="tip"><strong>¿Por qué agrupar?</strong> Para crear supervisión común y compartir recursos entre puestos afines.</div>
+
+    <div class="two-col" style="margin-top:12px">
+      <div>
+        <h3>Agrupamiento funcional — Fortalezas</h3>
+        <ul class="clean">
+          <li>Permite agrupar especialistas bajo una jefatura</li>
+          <li>Maximiza la utilización de habilidades técnicas</li>
+          <li>Orienta a las personas a una actividad específica</li>
+          <li>Simplifica la capacitación dentro del área</li>
+          <li>Mantiene el poder y el prestigio de las funciones principales</li>
+          <li>Economías de escala en recursos especializados</li>
+        </ul>
+        <h3 style="margin-top:12px">Agrupamiento funcional — Debilidades</h3>
+        <ul class="clean">
+          <li>El punto de vista del personal se sobre-especializa y estrecha</li>
+          <li>La responsabilidad por resultados se concentra exclusivamente en la cima</li>
+          <li>Se limita el desarrollo de gerentes generales</li>
+          <li>Tiende a reducir la cooperación entre departamentos (barreras)</li>
+          <li>Lenta adaptación a nuevas condiciones (no percibe el exterior)</li>
+          <li>Las personas concentran esfuerzos en sus especialidades en detrimento del objetivo global</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Agrupamiento por mercado — Fortalezas</h3>
+        <ul class="clean">
+          <li>Servicio al cliente y respuesta rápida</li>
+          <li>Flexibilidad y adaptabilidad</li>
+          <li>Responsabilidad clara por resultado</li>
+        </ul>
+        <h3 style="margin-top:12px">Agrupamiento por mercado — Debilidades</h3>
+        <ul class="clean">
+          <li>Duplicación de recursos entre unidades</li>
+          <li>Limita el intercambio de información entre unidades</li>
+          <li>Menor especialización técnica</li>
+        </ul>
+        <h3 style="margin-top:12px">3 criterios de interdependencia para elegir la base</h3>
+        <table>
+          <tr><th>Interdependencia</th><th>Base</th></tr>
+          <tr><td>Corriente de trabajo (flujo continuo)</td><td>Por mercado</td></tr>
+          <tr><td>Economía de escala (compartir recursos)</td><td>Funcional</td></tr>
+          <tr><td>Social (identidad o interacción)</td><td>Social</td></tr>
+        </table>
+        <div class="tip" style="margin-top:8px"><strong>Caso Tovier SA:</strong> La misma empresa puede tener distintas bases en distintas áreas (ej: estructura general funcional, ventas por cliente, producción por procesos, cobranzas por zona geográfica).</div>
+      </div>
+    </div>
+
+    <h3 style="margin-top:16px">Tramo de control (span of control)</h3>
+    <div class="grid grid-2">
+      <div class="card"><div class="label">Tramo amplio</div><div class="desc">Pocas capas jerárquicas → estructura plana → más autonomía. Se da cuando hay más normalización, tareas similares, poca interdependencia.</div></div>
+      <div class="card"><div class="label">Tramo estrecho</div><div class="desc">Más capas → estructura alta → más supervisión directa.</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Vínculos laterales (Mintzberg)</h2>
+    <div class="tip">Mecanismos que coordinan entre unidades <strong>sin pasar por la jerarquía</strong>. Se dividen en dos grupos.</div>
+
+    <div class="two-col" style="margin-top:12px">
+      <div>
+        <h3>A. Sistemas de planificación y control</h3>
+        <table>
+          <tr><th>Sistema</th><th>Qué hace</th></tr>
+          <tr><td><strong>Planeamiento de la acción</strong></td><td>Especifica las acciones a realizar en el futuro (instrucciones programadas, procedimientos) → normalización de procesos</td></tr>
+          <tr><td><strong>Control del desempeño</strong></td><td>Establece estándares de resultados y los monitorea → normalización de outputs</td></tr>
+        </table>
+        <div class="tip" style="margin-top:8px">Pueden coexistir: el control de desempeño mide cada división; dentro de cada división se aplica planeamiento de la acción.</div>
+      </div>
+      <div>
+        <h3>B. Dispositivos de enlace — menor → mayor costo</h3>
+        <table>
+          <tr><th>Dispositivo</th><th>Descripción</th></tr>
+          <tr><td><strong>Posición de enlace</strong></td><td>Rol sin autoridad formal que coordina dos unidades</td></tr>
+          <tr><td><strong>Task force (grupo temporal)</strong></td><td>Se forma para un problema específico, luego se disuelve</td></tr>
+          <tr><td><strong>Comité permanente</strong></td><td>Reunión regular entre representantes de distintas áreas</td></tr>
+          <tr><td><strong>Gerente integrador</strong></td><td>Autoridad formal sobre proyecto, no sobre personas</td></tr>
+          <tr><td><strong>Estructura matricial</strong></td><td>Doble autoridad: funcional + proyecto/producto</td></tr>
+        </table>
+        <div class="tip" style="margin-top:8px"><strong>Task force vs. comité permanente:</strong> si la tarea es recurrente → comité permanente; si es puntual → task force.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Descentralización (Mintzberg) — 5 formas puras</h2>
+    <table>
+      <tr><th>Forma</th><th>Descripción</th><th>Configuración asociada</th></tr>
+      <tr><td><strong>1. Centralización vertical y horizontal</strong></td><td>Todo el poder en la cumbre</td><td>Estructura simple</td></tr>
+      <tr><td><strong>2. Desc. horizontal limitada</strong></td><td>Poder hacia la tecnoestructura (estandariza)</td><td>Burocracia maquinal</td></tr>
+      <tr><td><strong>3. Desc. vertical limitada (paralela)</strong></td><td>Poder en cada división</td><td>Forma divisionalizada</td></tr>
+      <tr><td><strong>4. Desc. vertical y horizontal selectiva</strong></td><td>Poder repartido según tipo de decisión</td><td>Adhocracia</td></tr>
+      <tr><td><strong>5. Desc. vertical y horizontal</strong></td><td>Poder en el núcleo operativo</td><td>Burocracia profesional</td></tr>
+    </table>
+    <div class="tip" style="margin-top:8px"><strong>Vertical:</strong> el poder baja en la jerarquía → hacia la línea media. <strong>Horizontal:</strong> el poder sale de la línea jerárquica → hacia tecnoestructura, expertos o todos.</div>
+  </div>
+
+</div><!-- /u2b -->
+
+<!-- ===================== U3A ===================== -->
+<div class="tab-content" id="u3a" data-tab="u3a">
+
+  <div class="section">
+    <h2>El enfoque contingente — Variables</h2>
+    <div class="grid grid-3">
+      <div class="card"><div class="label">Variables independientes (4)</div><div class="desc">Factores de contingencia — no controlables: Edad/tamaño, Sistema técnico, Entorno, Poder</div></div>
+      <div class="card"><div class="label">Variables intermedias (4)</div><div class="desc">Median la relación con el trabajo: Comprensibilidad, Predecibilidad, Diversidad del trabajo, Velocidad de respuesta</div></div>
+      <div class="card"><div class="label">Variables dependientes (7)</div><div class="desc">De diseño: Especialización, Preparación/adoctrinamiento, Formalización, Agrupación, Tamaño de unidades, Desc. vertical, Desc. horizontal</div></div>
+    </div>
+    <div class="grid grid-2" style="margin-top:12px">
+      <div class="card"><div class="label">Hipótesis de congruencia</div><div class="desc">Los parámetros de diseño deben ser congruentes con los factores situacionales. Cada factor condiciona ciertos parámetros.</div></div>
+      <div class="card"><div class="label">Hipótesis de configuración</div><div class="desc">Todos los parámetros + factores situacionales en conjunto producen un tipo de organización específico. No alcanza con ajustar un solo elemento.</div></div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Factor A — Edad y Tamaño</h2>
+    <table>
+      <tr><th>Hipótesis</th><th>Relación</th></tr>
+      <tr><td>A mayor <strong>antigüedad</strong></td><td>→ mayor formalización de la estructura</td></tr>
+      <tr><td>La estructura refleja</td><td>la época en que se fundó el sector</td></tr>
+      <tr><td>A mayor <strong>tamaño</strong></td><td>→ mayor complejidad de la estructura</td></tr>
+      <tr><td>A mayor tamaño</td><td>→ mayor especialización de funciones</td></tr>
+      <tr><td>A mayor tamaño</td><td>→ mayor diferenciación entre unidades</td></tr>
+      <tr><td>A mayor tamaño</td><td>→ mayor desarrollo del componente administrativo</td></tr>
+      <tr><td>A mayor tamaño</td><td>→ mayor tamaño de la unidad media (línea media más desarrollada)</td></tr>
+      <tr><td>A mayor tamaño</td><td>→ mayor formalización del comportamiento</td></tr>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Factor B — Sistema Técnico</h2>
+    <p style="font-size:13px; color:#475569; margin-bottom:10px">El instrumento concreto que usa el operador para convertir el input en output. <strong>No</strong> es la tecnología en sentido amplio.</p>
+    <div class="two-col">
+      <div>
+        <h3>2 dimensiones independientes</h3>
+        <div class="grid grid-2">
+          <div class="card"><div class="label">Regulación</div><div class="desc">Grado en que mecaniza/controla el trabajo del operador</div></div>
+          <div class="card"><div class="label">Sofisticación</div><div class="desc">Grado en que complejiza el trabajo; requiere mayor comprensión y capacitación</div></div>
+        </div>
+        <h3 style="margin-top:12px">Hipótesis</h3>
+        <ul class="clean">
+          <li><strong>Más regulador</strong> → más formalizado el trabajo → más burocrática la estructura del núcleo operativo</li>
+          <li><strong>Más sofisticado</strong> → más elaborada la estructura administrativa → mayor descentralización horizontal → mayor desarrollo del staff de apoyo</li>
+          <li><strong>Más automatizado</strong> → menos supervisión directa → más trabajo no rutinario para los que quedan</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Clasificación de Woodward (3 tipos de producción)</h3>
+        <table>
+          <tr><th>Tipo</th><th>Ejemplo</th></tr>
+          <tr><td>Unitaria / por lotes pequeños</td><td>Traje a medida, prototipo</td></tr>
+          <tr><td>En masa / por lotes grandes</td><td>Autos, electrodomésticos</td></tr>
+          <tr><td>Por proceso continuo</td><td>Refinería, planta química</td></tr>
+        </table>
+        <div class="tip" style="margin-top:8px">Para el TP: analizar regulación y sofisticación por separado y luego concluir a cuál tiende más, justificando.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Factor C — Ambiente</h2>
+    <div class="tip">Todo lo externo a la organización, que no puede controlarse y ejerce influencia significativa. <strong>No hay respuestas correctas/incorrectas — importa la justificación.</strong></div>
+    <div class="two-col" style="margin-top:12px">
+      <div>
+        <h3>4 dimensiones</h3>
+        <table>
+          <tr><th>Dimensión</th><th>Polo 1</th><th>Polo 2</th></tr>
+          <tr><td>Simple ↔ <strong>Complejo</strong></td><td>Trabajo poco calificado</td><td>Exigencias sofisticadas</td></tr>
+          <tr><td>Estable ↔ <strong>Dinámico</strong></td><td>Cambios predecibles</td><td>Cambios continuos</td></tr>
+          <tr><td>No hostil ↔ <strong>Hostil</strong></td><td>Entorno favorable</td><td>Alta competencia</td></tr>
+          <tr><td>No diverso ↔ <strong>Diverso</strong></td><td>Un producto/zona</td><td>Múltiples productos/zonas</td></tr>
+        </table>
+        <h3 style="margin-top:12px">Hipótesis</h3>
+        <ul class="clean">
+          <li>Más <strong>dinámico</strong> → más orgánica la estructura</li>
+          <li>Más <strong>complejo</strong> → más descentralizada</li>
+          <li>Más <strong>diversificado</strong> → divisionalización por mercado</li>
+          <li>Más <strong>hostil</strong> → centralización temporal para respuesta rápida</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Mecanismo de coordinación según el ambiente</h3>
+        <table>
+          <tr><th></th><th>Simple</th><th>Complejo</th></tr>
+          <tr><td><strong>Estable</strong></td><td>Normaliz. de procesos</td><td>Normaliz. de habilidades</td></tr>
+          <tr><td><strong>Dinámico</strong></td><td>Supervisión directa</td><td>Ajuste mutuo</td></tr>
+        </table>
+        <div class="tip" style="margin-top:8px">Zona intermedia simple-estable / complejo-estable: estandarización de <strong>resultados</strong> → base por mercado.</div>
+        <h3 style="margin-top:12px">Matriz de incertidumbre (Daft)</h3>
+        <table>
+          <tr><th></th><th>Simple</th><th>Complejo</th></tr>
+          <tr><td><strong>Estable</strong></td><td>Baja incertidumbre → burocracia centralizada</td><td>Incertidumbre moderada → descentralización</td></tr>
+          <tr><td><strong>Inestable</strong></td><td>Incertidumbre moderada-alta → más flexible</td><td>Alta incertidumbre → orgánica, ajuste mutuo</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Factor D — Poder</h2>
+    <p style="font-size:13px; color:#475569; margin-bottom:10px">Capacidad de afectar el comportamiento de las organizaciones. Hoy: quien tiene más información tiene más poder.</p>
+    <div class="two-col">
+      <div>
+        <h3>Stakeholders</h3>
+        <table>
+          <tr><th>Poder Externo</th><th>Poder Interno</th></tr>
+          <tr><td>Accionistas</td><td>Alta dirección (ápice)</td></tr>
+          <tr><td>Proveedores</td><td>Directivos de línea media</td></tr>
+          <tr><td>Clientes</td><td>Operarios (núcleo operativo)</td></tr>
+          <tr><td>Sindicatos</td><td>Analistas y staff de apoyo</td></tr>
+          <tr><td>Estado / Reguladores</td><td>Personal e ideología organizacional</td></tr>
+          <tr><td>Grupos de interés especial</td><td></td></tr>
+        </table>
+      </div>
+      <div>
+        <h3>Hipótesis</h3>
+        <ul class="clean">
+          <li>Mayor <strong>control externo</strong> → más centralizada y formalizada la estructura</li>
+          <li><strong>Moda gerencial:</strong> estructuras de moda se adoptan aunque no sean las más eficientes</li>
+          <li><strong>Poder interno:</strong> los gerentes pueden crear estructuras que los beneficien a ellos, no a la organización</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /u3a -->
+
+<!-- ===================== U3B ===================== -->
+<div class="tab-content" id="u3b" data-tab="u3b">
+
+  <div class="section">
+    <h2>7 Configuraciones de Mintzberg</h2>
+    <table>
+      <tr><th>Configuración</th><th>Parte clave</th><th>Mecanismo</th><th>Descentralización</th><th>Ambiente</th><th>Ejemplo</th></tr>
+      <tr><td><strong>Estructura simple</strong></td><td>Cumbre estratégica</td><td>Supervisión directa</td><td>Centralizada</td><td>Simple y dinámico</td><td>Startup, empresa familiar</td></tr>
+      <tr><td><strong>Burocracia maquinal</strong></td><td>Tecnoestructura</td><td>Normaliz. de procesos</td><td>Horizontal limitada</td><td>Simple y estable</td><td>Fábrica, call center</td></tr>
+      <tr><td><strong>Burocracia profesional</strong></td><td>Núcleo operativo</td><td>Normaliz. de habilidades</td><td>Vertical y horizontal</td><td>Complejo y estable</td><td>Hospital, universidad</td></tr>
+      <tr><td><strong>Forma divisionalizada</strong></td><td>Línea media</td><td>Normaliz. de outputs</td><td>Vertical limitada/paralela</td><td>Mercados diversificados</td><td>Arcor, Unilever</td></tr>
+      <tr><td><strong>Adhocracia</strong></td><td>Staff de apoyo</td><td>Ajuste mutuo</td><td>Selectiva</td><td>Complejo y dinámico</td><td>NASA, agencia publicidad</td></tr>
+      <tr><td><strong>Misionera</strong></td><td>Ideología</td><td>Normaliz. de normas/valores</td><td>—</td><td>Variable</td><td>ONG, cooperativa</td></tr>
+      <tr><td><strong>Política</strong></td><td>Ninguna</td><td>Conflicto</td><td>—</td><td>Crisis / transición</td><td>Org. en pugna interna</td></tr>
+    </table>
+
+    <div style="overflow-x:auto; margin-top:16px">
+      <h3>Patrones de diseño por configuración</h3>
+      <table>
+        <tr><th>Parámetro</th><th>Simple</th><th>Maquinal</th><th>Profesional</th><th>Divisional</th><th>Adhocracia</th></tr>
+        <tr><td>Especialización del puesto</td><td>Baja</td><td>Alta</td><td>Alta H / Baja V</td><td>Media</td><td>Mínima</td></tr>
+        <tr><td>Preparación / Adoctrinamiento</td><td>Poco</td><td>Poco</td><td>Mucho</td><td>Algo</td><td>Mínimo</td></tr>
+        <tr><td>Formalización</td><td>Baja</td><td>Alta</td><td>Baja</td><td>Alta (en c/div.)</td><td>Mínima</td></tr>
+        <tr><td>Agrupación</td><td>Funcional</td><td>Funcional</td><td>Funcional y mercado</td><td>Por mercado</td><td>—</td></tr>
+        <tr><td>Planificación y control</td><td>Poco/ninguno</td><td>Planif. de acciones</td><td>Poco</td><td>Control rendimiento</td><td>—</td></tr>
+        <tr><td>Dispositivos de enlace</td><td>Pocos</td><td>Pocos</td><td>En administración</td><td>Pocos</td><td>Intensos</td></tr>
+      </table>
+    </div>
+
+    <div class="two-col" style="margin-top:16px">
+      <div>
+        <h3>Burocracia Profesional — características especiales</h3>
+        <ul class="clean">
+          <li><strong>Burocrática sin ser centralizada:</strong> la estandarización viene de la formación y normas de la profesión, no de reglas internas</li>
+          <li><strong>Encasillamiento:</strong> el profesional clasifica el problema en una categoría estándar y aplica el programa correspondiente</li>
+          <li><strong>Rol del administrador:</strong> no puede dirigir a los profesionales — gestiona el límite con el exterior, consigue recursos, resuelve conflictos</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Organización Misionera — 3 subtipos</h3>
+        <ul class="clean">
+          <li><strong>Reformadoras:</strong> buscan cambiar el mundo (ej: movimientos sociales)</li>
+          <li><strong>Conservadoras:</strong> preservan un estilo de vida (ej: Alcohólicos Anónimos)</li>
+          <li><strong>Claustrales:</strong> se aíslan del mundo exterior (ej: monasterios)</li>
+        </ul>
+        <h3 style="margin-top:12px">Modelo de Greiner — 5 fases</h3>
+        <table>
+          <tr><th>Fase</th><th>Crecimiento por…</th><th>Crisis de…</th></tr>
+          <tr><td>1</td><td>Creatividad</td><td>Liderazgo</td></tr>
+          <tr><td>2</td><td>Dirección</td><td>Autonomía</td></tr>
+          <tr><td>3</td><td>Delegación</td><td>Control</td></tr>
+          <tr><td>4</td><td>Coordinación</td><td>Burocracia</td></tr>
+          <tr><td>5</td><td>Colaboración</td><td>Crecimiento interno</td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Tipologías de Drucker</h2>
+    <div class="tip"><strong>Drucker es normativo</strong> (cómo debería ser). <strong>Mintzberg es descriptivo</strong> (cómo es).</div>
+
+    <h3 style="margin-top:12px">7 Especificaciones de diseño</h3>
+    <div class="grid grid-3" style="margin-bottom:16px">
+      <div class="card"><div class="num">1</div><div class="label">Claridad</div><div class="desc">Cada persona sabe dónde está y adónde ir. Claridad ≠ simplicidad.</div></div>
+      <div class="card"><div class="num">2</div><div class="label">Economía</div><div class="desc">Mínimo control, supervisión e inducción. La matricial NO es económica.</div></div>
+      <div class="card"><div class="num">3</div><div class="label">Dirección al desempeño</div><div class="desc">Orientar la atención hacia resultados del negocio, no procesos internos.</div></div>
+      <div class="card"><div class="num">4</div><div class="label">Comprensión de la tarea</div><div class="desc">Cada miembro entiende su tarea y cómo se relaciona con el objetivo general.</div></div>
+      <div class="card"><div class="num">5</div><div class="label">Toma de decisiones</div><div class="desc">En el nivel adecuado, lo más cerca posible de donde ocurre la acción.</div></div>
+      <div class="card"><div class="num">6</div><div class="label">Estabilidad y adaptabilidad</div><div class="desc">Predecible para funcionar, capaz de adaptarse al entorno.</div></div>
+      <div class="card"><div class="num">7</div><div class="label">Perpetuación y autorrenovación</div><div class="desc">Formar futuros líderes. Si depende de una sola persona, es frágil.</div></div>
+    </div>
+
+    <h3>5 Tipos de organización y evaluación</h3>
+    <table>
+      <tr><th>Especificación</th><th>Funcional</th><th>Des. Federal</th><th>Des. Simulada</th><th>Sistemática (Matricial)</th><th>Equipo</th></tr>
+      <tr><td>Claridad</td><td class="eval-b">B</td><td class="eval-b">B</td><td class="eval-m">M</td><td class="eval-m">M</td><td class="eval-m">M</td></tr>
+      <tr><td>Economía</td><td class="eval-b">B</td><td class="eval-b">B</td><td class="eval-m">M</td><td class="eval-m">M</td><td class="eval-m">M</td></tr>
+      <tr><td>Dirección al desempeño</td><td class="eval-m">M</td><td class="eval-b">B</td><td class="eval-m">M</td><td class="eval-b">B</td><td class="eval-m">M</td></tr>
+      <tr><td>Toma de decisiones</td><td class="eval-m">M</td><td class="eval-b">B</td><td class="eval-m">M</td><td class="eval-m">M</td><td class="eval-m">M</td></tr>
+      <tr><td>Perpetuación y autorrenovación</td><td class="eval-m">M</td><td class="eval-b">B</td><td class="eval-b">B</td><td class="eval-m">M</td><td class="eval-m">M</td></tr>
+      <tr><td>Comprensión tarea propia y común</td><td class="eval-m">M</td><td class="eval-b">B</td><td class="eval-m">M</td><td class="eval-m">M</td><td class="eval-b">B</td></tr>
+      <tr><td>Estabilidad y adaptabilidad</td><td class="eval-m">M</td><td class="eval-b">B</td><td class="eval-m">M</td><td class="eval-m">M</td><td class="eval-b">B</td></tr>
+    </table>
+    <div class="tip" style="margin-top:8px"><strong>La descentralización federal es la que mejor cumple las especificaciones.</strong> Las últimas 2 filas no se completaron en clase — valores derivados del texto.</div>
+  </div>
+
+  <div class="section">
+    <h2>Tipologías de Daft</h2>
+    <div class="grid grid-2">
+      <div>
+        <div class="tip"><strong>Grupo 1 — Tradicionales:</strong> Funcional, Divisional, Geográfica, Funcional con vínculos horizontales</div>
+        <h3 style="margin-top:10px">Funcional</h3>
+        <table>
+          <tr><th>Fortalezas</th><th>Debilidades</th></tr>
+          <tr><td>Economías de escala</td><td>Lentitud de respuesta al entorno</td></tr>
+          <tr><td>Desarrollo de habilidades profundas</td><td>Decisiones acumuladas en nivel alto</td></tr>
+          <tr><td>Logro de metas funcionales</td><td>Coordinación horizontal deficiente</td></tr>
+          <tr><td>Mejor con uno/pocos productos</td><td>Menor innovación / perspectiva limitada</td></tr>
+        </table>
+        <h3 style="margin-top:10px">Divisional</h3>
+        <table>
+          <tr><th>Fortalezas</th><th>Debilidades</th></tr>
+          <tr><td>Adaptación a entornos inestables</td><td>Elimina economías de escala</td></tr>
+          <tr><td>Orientada al cliente</td><td>Coordinación deficiente entre líneas</td></tr>
+          <tr><td>Coordinación interfuncional dentro de c/div.</td><td>Elimina especialización técnica profunda</td></tr>
+        </table>
+      </div>
+      <div>
+        <div class="tip"><strong>Grupo 2 — Innovadoras:</strong> Horizontal, Matricial, Red virtual</div>
+        <h3 style="margin-top:10px">Horizontal</h3>
+        <table>
+          <tr><th>Fortalezas</th><th>Debilidades</th></tr>
+          <tr><td>Flexibilidad y respuesta al cliente</td><td>Difícil determinar procesos centrales</td></tr>
+          <tr><td>Todos orientados al valor para el cliente</td><td>Requiere cambios profundos de cultura</td></tr>
+          <tr><td>Trabajo en equipo y colaboración</td><td>Gerentes tradicionales resisten ceder poder</td></tr>
+        </table>
+        <h3 style="margin-top:10px">Matricial</h3>
+        <table>
+          <tr><th>Fortalezas</th><th>Debilidades</th></tr>
+          <tr><td>Flexibilidad para proyectos complejos</td><td>Confusión de autoridad (dos jefes)</td></tr>
+          <tr><td>Uso eficiente de recursos</td><td>Conflictos de poder</td></tr>
+          <tr><td>Rápida respuesta al entorno</td><td>Requiere alta madurez interpersonal</td></tr>
+        </table>
+        <h3 style="margin-top:10px">Red virtual / Modular</h3>
+        <p style="font-size:13px; color:#475569">Subcontrata la mayoría de sus funciones y conserva solo las actividades clave. Ej: Nike diseña y hace marketing, terceriza la producción. Extremadamente flexible, muy bajo costo fijo.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /u3b -->
+
+<!-- ===================== U3C ===================== -->
+<div class="tab-content" id="u3c" data-tab="u3c">
+
+  <div class="section">
+    <h2>Formas y fuerzas (Mintzberg — El Proceso Estratégico, Cap. 14)</h2>
+    <div class="two-col">
+      <div>
+        <div class="tip"><strong>Conjuntadores:</strong> categorizan, sintetizan → las configuraciones son sus herramientas. <strong>Divisionistas:</strong> matizan, distinguen → cada organización es única. La clave: hay que conjuntar Y dividir. Las formas son puntos de referencia, no camisas de fuerza → metáfora del <strong>LEGO organizacional</strong>.</div>
+
+        <h3 style="margin-top:14px">Las 5 formas — vértices del pentágono</h3>
+        <table>
+          <tr><th>Forma</th><th>Fuerza dominante</th><th>Imagen</th></tr>
+          <tr><td><strong>Emprendedora</strong> (Estructura Simple)</td><td>Dirección / visión</td><td>Empresa joven</td></tr>
+          <tr><td><strong>Máquina</strong> (Burocracia Maquinal)</td><td>Eficiencia</td><td>Reloj suizo</td></tr>
+          <tr><td><strong>Profesional</strong> (Burocracia Profesional)</td><td>Destreza / pericia</td><td>—</td></tr>
+          <tr><td><strong>Diversificada</strong> (Forma Divisional)</td><td>Concentración</td><td>—</td></tr>
+          <tr><td><strong>Adhocracia</strong></td><td>Aprendizaje / innovación</td><td>—</td></tr>
+        </table>
+
+        <h3 style="margin-top:14px">Las 2 fuerzas catalíticas — centro del pentágono</h3>
+        <table>
+          <tr><th>Fuerza</th><th>Forma</th><th>Dirección</th><th>Efecto</th></tr>
+          <tr><td><strong>Ideología</strong></td><td>Misionera</td><td>Centrípeta (hacia adentro)</td><td>Cooperación, cultura compartida</td></tr>
+          <tr><td><strong>Política</strong></td><td>Política</td><td>Centrífuga (hacia afuera)</td><td>Competencia, conflicto de intereses</td></tr>
+        </table>
+        <div class="tip" style="margin-top:8px">
+          Solo cooperación → cultura de secta, sin cambio posible.<br>
+          Solo competencia → la organización explota.<br>
+          Las orgs. maduras con cultura muy arraigada a veces necesitan <strong>reinyectar política</strong> para poder transformarse.
+        </div>
+      </div>
+      <div>
+        <h3>Los 6 fenómenos</h3>
+        <table>
+          <tr><th>Fenómeno</th><th>Qué pasa</th></tr>
+          <tr><td><strong>Configuración</strong></td><td>Predomina una fuerza → la organización se orienta hacia una forma pura</td></tr>
+          <tr><td><strong>Contaminación</strong></td><td>La fuerza dominante hace ceder a las demás. Ej: en la máquina, la eficiencia hace ceder la innovación</td></tr>
+          <tr><td><strong>Contención</strong></td><td>Fuerzas en equilibrio → estructuras híbridas / combinaciones</td></tr>
+          <tr><td><strong>Ruptura</strong></td><td>La contención no alcanza → una fuerza toma el control</td></tr>
+          <tr><td><strong>Conversión</strong></td><td>Cambio de forma: <strong>oscilante</strong> (temporal, vuelve) / <strong>evolutiva</strong> (gradual y definitivo) / <em>[3er tipo no confirmado en clase]</em></td></tr>
+          <tr><td><strong>Contradicción</strong></td><td>Tensión permanente entre cooperación/ideología y competencia/política</td></tr>
+        </table>
+        <div class="tip" style="margin-top:8px"><strong>Contaminación</strong> es el lado oscuro de la congruencia: demasiada consistencia en una dirección hace que la organización pierda la capacidad de adaptarse.</div>
+
+        <h3 style="margin-top:14px">Combinaciones disfuncionales</h3>
+        <p style="font-size:13px; color:#475569">No toda combinación de formas es funcional. Ej: combinar innovación (adhocracia) con la forma diversificada puede ser disfuncional. Contra-ejemplo: Apple, que combina innovación bajo un paraguas de muchos productos.</p>
+      </div>
+    </div>
+  </div>
+
+</div><!-- /u3c -->
+
+</main>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(el => el.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+</script>
+</body>
+</html>
